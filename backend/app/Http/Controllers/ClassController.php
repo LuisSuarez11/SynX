@@ -17,7 +17,7 @@ class ClassController extends Controller
      * ADMINISTRACIÓN DE CLASES (Para Admin/Staff)
      * ==========================================
      */
-    
+
     // Obtener catálogo de tipos de clases
     public function indexClasses(Request $request)
     {
@@ -31,13 +31,13 @@ class ClassController extends Controller
     {
         $tenantId = $request->user()->tenant_id;
         $request->validate(['name' => 'required|string', 'description' => 'nullable|string']);
-        
+
         $class = GymClass::create([
             'tenant_id' => $tenantId,
             'name' => $request->name,
             'description' => $request->description
         ]);
-        
+
         return response()->json(['message' => 'Clase creada', 'class' => $class], 201);
     }
 
@@ -49,10 +49,10 @@ class ClassController extends Controller
         $branchId = $user->role === 'member' ? $user->branch_id : ($request->query('branch_id') ?? clone $user->branch_id);
 
         $schedules = ClassSchedule::with(['gymClass', 'instructor:id,name'])
-            ->whereHas('gymClass', function($q) use ($tenantId) {
+            ->whereHas('gymClass', function ($q) use ($tenantId) {
                 $q->where('tenant_id', $tenantId);
             });
-            
+
         if ($branchId) {
             $schedules->where('branch_id', $branchId);
         }
@@ -65,7 +65,8 @@ class ClassController extends Controller
     public function storeSchedule(Request $request)
     {
         $user = $request->user();
-        if ($user->role === 'member') return response()->json(['error' => 'No autorizado'], 403);
+        if ($user->role === 'member')
+            return response()->json(['error' => 'No autorizado'], 403);
 
         $request->validate([
             'gym_class_id' => 'required|exists:gym_classes,id',
@@ -104,7 +105,7 @@ class ClassController extends Controller
             ->whereDate('reservation_date', $date)
             ->where('status', 'active')
             ->get();
-            
+
         return response()->json(['reservations' => $reservations]);
     }
 
@@ -117,7 +118,7 @@ class ClassController extends Controller
         ]);
 
         $user = $request->user();
-        
+
         // Si el admin está reservando manualmente para un miembro, enviará el user_id
         if ($user->role !== 'member') {
             $request->validate(['user_id' => 'required|exists:users,id']);
@@ -136,7 +137,7 @@ class ClassController extends Controller
                 ->whereDate('reservation_date', $date)
                 ->where('status', 'active')
                 ->count();
-                
+
             if ($currentReservations >= $schedule->capacity) {
                 return response()->json(['error' => 'La clase ya está llena'], 400);
             }
@@ -147,7 +148,7 @@ class ClassController extends Controller
                 ->whereDate('reservation_date', $date)
                 ->where('status', 'active')
                 ->exists();
-                
+
             if ($alreadyReserved) {
                 return response()->json(['error' => 'El miembro ya tiene una reserva activa para esta clase'], 400);
             }
@@ -156,7 +157,7 @@ class ClassController extends Controller
             // Buscar subscripción credit_based activa con creditos > 0
             $activeSub = Subscription::where('user_id', $memberId)
                 ->where('status', 'active')
-                ->whereHas('membership', function($q) {
+                ->whereHas('membership', function ($q) {
                     $q->where('type', 'credit_based');
                 })
                 ->where('remaining_credits', '>', 0)
@@ -168,12 +169,12 @@ class ClassController extends Controller
                 // Si permitimos planes completos:
                 $timeSub = Subscription::where('user_id', $memberId)
                     ->where('status', 'active')
-                    ->whereHas('membership', function($q) {
+                    ->whereHas('membership', function ($q) {
                         $q->where('type', 'time_based');
                     })
                     ->where(function ($q) {
                         $q->whereNull('end_date')
-                          ->orWhereDate('end_date', '>=', today());
+                            ->orWhereDate('end_date', '>=', today());
                     })->exists();
 
                 if (!$timeSub) {
@@ -214,15 +215,15 @@ class ClassController extends Controller
         }
 
         $schedule = ClassSchedule::findOrFail($reservation->class_schedule_id);
-        
+
         // Calcular hora de la clase
         $classDateTime = Carbon::parse($reservation->reservation_date . ' ' . $schedule->start_time);
-        
+
         return DB::transaction(function () use ($reservation, $classDateTime, $user) {
             $now = now();
             // Regla: 4 horas de anticipación
             $hoursDifference = $now->diffInHours($classDateTime, false); // false para que pueda ser negativo si ya pasó
-            
+
             // Si el Admin cancela manualmente, siempre reembolsamos? Asumiremos que sí, para evitar quejas.
             // Si el miembro cancela, verificamos las 4 hrs.
             if ($user->role === 'member' && $hoursDifference < 4) {
@@ -237,7 +238,7 @@ class ClassController extends Controller
             // Devolvemos el crédito a la suscripción de creditos activa
             $activeSub = Subscription::where('user_id', $reservation->user_id)
                 ->where('status', 'active')
-                ->whereHas('membership', function($q) {
+                ->whereHas('membership', function ($q) {
                     $q->where('type', 'credit_based');
                 })->first();
 
