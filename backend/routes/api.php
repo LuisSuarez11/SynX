@@ -13,6 +13,15 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 
+Route::get('/test-db', function () {
+    try {
+        \DB::connection()->getPdo();
+        return response()->json(['status' => 'Conectado a la BD: ' . \DB::connection()->getDatabaseName()]);
+    } catch (\Exception $e) {
+        return response()->json(['error' => 'Error de BD: ' . $e->getMessage()], 500);
+    }
+});
+
 Route::middleware('auth:sanctum')->group(function () {
 
     
