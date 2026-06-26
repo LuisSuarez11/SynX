@@ -41,5 +41,5 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Puerto que usará Render
 EXPOSE 80
 
-# El servidor iniciará con Apache, pero primero correremos las migraciones
-CMD php artisan migrate --force && php artisan db:seed --force && apache2-foreground
+# El servidor iniciará con Apache, intentando migrar y seedear sin bloquear el inicio
+CMD php artisan migrate --force ; php artisan db:seed --force ; apache2-foreground
