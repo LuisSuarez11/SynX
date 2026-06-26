@@ -16,10 +16,17 @@ const ClassesPage = () => {
   const [memberSearch, setMemberSearch] = useState('');
   const [reservationDate, setReservationDate] = useState(new Date().toISOString().split('T')[0]);
 
+  const user = JSON.parse(localStorage.getItem('synx_user') || '{}');
+  const userBranches = user?.tenant?.branches || [];
+
   const [formData, setFormData] = useState({
+    name: '',
     gym_class_id: '',
-    instructor_id: '1', // Hardcoded for simplicity or should be selected
+    branch_id: userBranches[0]?.id || '',
+    instructor_id: user.id || '1',
+    is_recurring: true,
     day_of_week: '1',
+    specific_date: new Date().toISOString().split('T')[0],
     start_time: '08:00',
     end_time: '09:00',
     capacity: '20'
@@ -49,18 +56,12 @@ const ClassesPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Create class if not exists logic could be added, but assuming we pick from list
-      if (!formData.gym_class_id) {
-        // Quick create class
-        const newClass = await api.post('/admin/classes', { name: 'Nueva Clase', description: '' });
-        formData.gym_class_id = newClass.data.class.id;
-      }
-      
       await api.post('/admin/schedules', formData);
       setIsModalOpen(false);
+      setFormData({ ...formData, name: '' });
       fetchData();
     } catch (err) {
-      alert("Error al programar horario.");
+      alert(err.response?.data?.error || "Error al programar horario.");
     } finally {
       setIsSubmitting(false);
     }
@@ -113,7 +114,9 @@ const ClassesPage = () => {
               <div className="flex justify-between items-start mb-4">
                 <div>
                   <h3 className="text-[16px] font-bold text-[#F8FAFC]">{schedule.gym_class?.name || 'Clase'}</h3>
-                  <p className="text-[12px] text-[#D7DCE8]/60 mt-0.5">{diasMapa[schedule.day_of_week]}</p>
+                  <p className="text-[12px] text-[#D7DCE8]/60 mt-0.5">
+                    {schedule.is_recurring ? `Cada ${diasMapa[schedule.day_of_week]}` : `Única: ${schedule.specific_date}`}
+                  </p>
                 </div>
                 <div className="bg-[#12151D] px-2.5 py-1 rounded-lg border border-[#1E2330] flex items-center gap-1.5 text-[#2ECC71]">
                   <Clock className="w-3.5 h-3.5" />
@@ -151,24 +154,58 @@ const ClassesPage = () => {
                 <button onClick={() => setIsModalOpen(false)} className="text-gray-400 hover:text-white"><X className="w-5 h-5"/></button>
               </div>
               <form onSubmit={handleCreateSchedule} className="p-6 space-y-4">
-                {/* Simplified form for brevity */}
                 <div>
-                  <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Día</label>
-                  <select value={formData.day_of_week} onChange={e => setFormData({...formData, day_of_week: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white">
-                    {diasMapa.map((d, i) => <option key={i} value={i}>{d}</option>)}
+                  <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Nombre de la Clase</label>
+                  <input type="text" required placeholder="Ej. Crossfit Extremo" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6D5DF6]" />
+                </div>
+                <div>
+                  <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Sucursal</label>
+                  <select required value={formData.branch_id} onChange={e => setFormData({...formData, branch_id: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6D5DF6]">
+                    <option value="">Seleccione sucursal...</option>
+                    {userBranches.map(b => <option key={b.id} value={b.id}>{b.name}</option>)}
                   </select>
                 </div>
+                <div>
+                  <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Frecuencia</label>
+                  <div className="flex gap-6 mt-1">
+                    <label className="flex items-center gap-2 text-[13px] text-white cursor-pointer">
+                      <input type="radio" name="freq" checked={formData.is_recurring} onChange={() => setFormData({...formData, is_recurring: true})} className="accent-[#6D5DF6] w-4 h-4" /> Semanal (Se repite)
+                    </label>
+                    <label className="flex items-center gap-2 text-[13px] text-white cursor-pointer">
+                      <input type="radio" name="freq" checked={!formData.is_recurring} onChange={() => setFormData({...formData, is_recurring: false})} className="accent-[#6D5DF6] w-4 h-4" /> Clase Única
+                    </label>
+                  </div>
+                </div>
+                
+                {formData.is_recurring ? (
+                  <div>
+                    <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Día de la semana</label>
+                    <select value={formData.day_of_week} onChange={e => setFormData({...formData, day_of_week: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6D5DF6]">
+                      {diasMapa.map((d, i) => <option key={i} value={i}>{d}</option>)}
+                    </select>
+                  </div>
+                ) : (
+                  <div>
+                    <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Fecha Exacta</label>
+                    <input type="date" required value={formData.specific_date} onChange={e => setFormData({...formData, specific_date: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-[14px] text-white focus:outline-none focus:border-[#6D5DF6]" />
+                  </div>
+                )}
+
                 <div className="flex gap-4">
                   <div className="flex-1">
                     <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Inicio</label>
-                    <input type="time" required value={formData.start_time} onChange={e => setFormData({...formData, start_time: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white" />
+                    <input type="time" required value={formData.start_time} onChange={e => setFormData({...formData, start_time: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6D5DF6]" />
+                  </div>
+                  <div className="flex-1">
+                    <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Fin</label>
+                    <input type="time" required value={formData.end_time} onChange={e => setFormData({...formData, end_time: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6D5DF6]" />
                   </div>
                   <div className="flex-1">
                     <label className="block text-[11px] text-[#D7DCE8]/50 uppercase mb-2">Cupos</label>
-                    <input type="number" required value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white" />
+                    <input type="number" min="1" required value={formData.capacity} onChange={e => setFormData({...formData, capacity: e.target.value})} className="w-full bg-[#12151D] border border-[#1E2330] rounded-xl px-4 py-3 text-white focus:outline-none focus:border-[#6D5DF6]" />
                   </div>
                 </div>
-                <button type="submit" disabled={isSubmitting} className="w-full py-3 bg-[#6D5DF6] text-white rounded-xl font-bold mt-4">Guardar Horario</button>
+                <button type="submit" disabled={isSubmitting} className="w-full py-3 bg-[#6D5DF6] hover:bg-[#5B4BE0] transition-colors text-white rounded-xl font-bold mt-6 shadow-[0_0_15px_rgba(109,93,246,0.3)]">Guardar Horario</button>
               </form>
             </motion.div>
           </div>

@@ -69,19 +69,40 @@ class ClassController extends Controller
             return response()->json(['error' => 'No autorizado'], 403);
 
         $request->validate([
-            'gym_class_id' => 'required|exists:gym_classes,id',
-            'instructor_id' => 'required|exists:users,id',
-            'day_of_week' => 'required|integer|min:0|max:6', // 0 = Domingo, 6 = Sábado
+            'name' => 'nullable|string', // Si se envía, puede crear una nueva clase
+            'gym_class_id' => 'nullable|exists:gym_classes,id',
+            'instructor_id' => 'nullable|exists:users,id',
+            'is_recurring' => 'required|boolean',
+            'day_of_week' => 'nullable|integer|min:0|max:6',
+            'specific_date' => 'nullable|date',
             'start_time' => 'required',
             'end_time' => 'required',
-            'capacity' => 'required|integer|min:1'
+            'capacity' => 'required|integer|min:1',
+            'branch_id' => 'required|exists:branches,id'
         ]);
 
+        $gymClassId = $request->gym_class_id;
+
+        // Auto crear clase si se envía 'name' y no 'gym_class_id'
+        if (!$gymClassId && $request->filled('name')) {
+            $newClass = GymClass::create([
+                'tenant_id' => $user->tenant_id,
+                'name' => $request->name
+            ]);
+            $gymClassId = $newClass->id;
+        }
+
+        if (!$gymClassId) {
+            return response()->json(['error' => 'Se requiere gym_class_id o name'], 400);
+        }
+
         $schedule = ClassSchedule::create([
-            'gym_class_id' => $request->gym_class_id,
+            'gym_class_id' => $gymClassId,
             'branch_id' => $user->role === 'manager' ? $user->branch_id : $request->branch_id,
             'instructor_id' => $request->instructor_id,
-            'day_of_week' => $request->day_of_week,
+            'is_recurring' => $request->is_recurring,
+            'day_of_week' => $request->is_recurring ? $request->day_of_week : null,
+            'specific_date' => !$request->is_recurring ? $request->specific_date : null,
             'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'capacity' => $request->capacity
