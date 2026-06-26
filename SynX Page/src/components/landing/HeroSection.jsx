@@ -201,7 +201,7 @@ export default function HeroSection() {
             className="inline-flex items-center gap-3 mb-8 px-4 py-2 border border-[#6D5DF6]/30 bg-[#6D5DF6]/5 rounded-full backdrop-blur-sm"
           >
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span className="font-mono-tech text-xs text-[#6D5DF6] uppercase tracking-widest">SISTEMA MULTI-TENANT 
+            <span className="font-mono-tech text-xs text-[#6D5DF6] uppercase tracking-widest">SISTEMA MULTI-TENANT</span>
           </motion.div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#F8FAFC] leading-[0.92] mb-8">
