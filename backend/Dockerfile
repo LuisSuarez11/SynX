@@ -1,6 +1,6 @@
 FROM php:8.2-apache
 
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema (incluyendo libpq-dev para Postgres)
 RUN apt-get update && apt-get install -y \
     libpng-dev \
     libjpeg-dev \
@@ -10,10 +10,11 @@ RUN apt-get update && apt-get install -y \
     git \
     curl \
     libonig-dev \
-    libxml2-dev
+    libxml2-dev \
+    libpq-dev
 
 # Instalar extensiones PHP necesarias para Laravel
-RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
+RUN docker-php-ext-install pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd
 
 # Habilitar mod_rewrite de Apache (necesario para Laravel)
 RUN a2enmod rewrite
