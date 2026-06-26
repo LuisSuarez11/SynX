@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ShieldAlert, Users, Link as LinkIcon, Lock } from 'lucide-react';
 
-// efecto de luz q sigue el mouse en las cards
+
 function SpotlightCard({ children, className = "" }) {
   const divRef = useRef(null);
   const [isFocused, setIsFocused] = useState(false);
@@ -65,7 +65,7 @@ function SpotlightCard({ children, className = "" }) {
   );
 }
 
-// visual del descontrol con errores tipo terminal
+
 const VisualErrors = () => {
   return (
     <div className="w-full h-44 relative overflow-hidden">
@@ -89,7 +89,7 @@ const VisualErrors = () => {
   );
 };
 
-// visual del hacinamiento con foto de gym lleno
+
 const VisualOvercrowd = () => {
   return (
     <div className="w-full h-44 relative overflow-hidden">
@@ -110,7 +110,7 @@ const VisualOvercrowd = () => {
   );
 };
 
-// visual del lock-in con candado
+
 const VisualHardwareLock = () => {
   return (
     <div className="w-full h-44 relative overflow-hidden">
@@ -134,7 +134,7 @@ const VisualHardwareLock = () => {
   );
 };
 
-// visual de la solucion con nodo central de synx y orbitas
+
 const VisualSaaS = () => {
   return (
     <div className="absolute inset-0 w-full h-full overflow-hidden rounded-2xl">
@@ -193,10 +193,10 @@ export default function ProblemSolution() {
           </h2>
         </div>
 
-        {/* bento grid de problemas */}
+        {}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[auto]">
           
-          {/* card 1 - descontrol */}
+          {}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="md:col-span-1">
             <SpotlightCard className="h-full group">
               <div className="p-8 pb-0">
@@ -212,7 +212,7 @@ export default function ProblemSolution() {
             </SpotlightCard>
           </motion.div>
 
-          {/* card 2 - hacinamiento */}
+          {}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.1 }} className="md:col-span-1">
             <SpotlightCard className="h-full group">
               <div className="p-8 pb-0">
@@ -228,7 +228,7 @@ export default function ProblemSolution() {
             </SpotlightCard>
           </motion.div>
 
-          {/* card 3 - lock-in */}
+          {}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.2 }} className="md:col-span-1">
             <SpotlightCard className="h-full group">
               <div className="p-8 pb-0">
@@ -244,7 +244,7 @@ export default function ProblemSolution() {
             </SpotlightCard>
           </motion.div>
 
-          {/* card grande - la solucion */}
+          {}
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="md:col-span-3">
             <SpotlightCard className="h-full p-8 md:p-12 border-[#6D5DF6]/30 group">
               <div className="grid md:grid-cols-2 gap-10 items-center h-full">

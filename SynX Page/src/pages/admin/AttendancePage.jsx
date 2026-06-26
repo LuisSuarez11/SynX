@@ -7,7 +7,7 @@ import api from '../../services/api';
 const AttendancePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
-  const [result, setResult] = useState(null); // { success, message, member, warning }
+  const [result, setResult] = useState(null); 
   const [attendances, setAttendances] = useState([]);
   const [stats, setStats] = useState({ hoy: 0, semana: 0, mes: 0 });
   const [loadingList, setLoadingList] = useState(true);
@@ -33,7 +33,7 @@ const AttendancePage = () => {
               }).catch(console.error);
             }
           },
-          (error) => { /* ignorar errores de frame */ }
+          (error) => {  }
         );
       } catch (err) {
         console.error("Error starting scanner:", err);
@@ -41,7 +41,7 @@ const AttendancePage = () => {
     };
 
     if (showScanner) {
-      // Pequeño delay para permitir que la animación renderice el div #reader
+      
       setTimeout(startScanner, 100);
     }
 
@@ -117,13 +117,13 @@ const AttendancePage = () => {
   return (
     <div className="max-w-[1200px] mx-auto space-y-6">
 
-      {/* Header */}
+      {}
       <div>
         <h1 className="text-[28px] font-bold text-[#F8FAFC] tracking-tight">Control de Acceso</h1>
         <p className="text-[14px] text-[#D7DCE8]/60">Registra la entrada de miembros al gimnasio en tiempo real.</p>
       </div>
 
-      {/* Stats Bar */}
+      {}
       <div className="grid grid-cols-3 gap-4">
         {[
           { label: 'Entradas Hoy', value: stats.hoy, icon: ScanLine, color: '#6D5DF6' },
@@ -145,7 +145,7 @@ const AttendancePage = () => {
 
       <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
 
-        {/* LEFT: Scanner */}
+        {}
         <div className="lg:col-span-2 space-y-4">
           <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-6 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#6D5DF6]/5 rounded-full blur-[50px]" />
@@ -209,7 +209,7 @@ const AttendancePage = () => {
               )}
             </AnimatePresence>
 
-            {/* Result Toast */}
+            {}
             <AnimatePresence>
               {result && (
                 <motion.div
@@ -233,7 +233,7 @@ const AttendancePage = () => {
             </AnimatePresence>
           </div>
 
-          {/* Tip card */}
+          {}
           <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-4">
             <p className="text-[11px] text-[#D7DCE8]/40 font-semibold uppercase tracking-wider mb-2">💡 Instrucciones</p>
             <ul className="text-[12px] text-[#D7DCE8]/60 space-y-1.5">
@@ -245,7 +245,7 @@ const AttendancePage = () => {
           </div>
         </div>
 
-        {/* RIGHT: Attendance List */}
+        {}
         <div className="lg:col-span-3 bg-[#0A0C14] border border-[#1E2330] rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between p-5 border-b border-[#1E2330]">
             <h2 className="text-[15px] font-bold text-[#F8FAFC]">Registro del Día</h2>

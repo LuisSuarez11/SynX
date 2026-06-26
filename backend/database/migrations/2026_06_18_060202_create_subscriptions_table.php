@@ -16,7 +16,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date')->nullable();
             $table->integer('remaining_credits')->nullable();
-            $table->string('status')->default('active'); // active, expired
+            $table->string('status')->default('active'); 
             $table->timestamps();
         });
     }

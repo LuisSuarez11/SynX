@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('subscription_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('amount', 10, 2);
-            $table->string('payment_method'); // cash, qr_transfer, card
+            $table->string('payment_method'); 
             $table->timestamp('payment_date');
             $table->timestamps();
         });

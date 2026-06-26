@@ -26,7 +26,7 @@ class MemberController extends Controller
             ->where('role', 'member')
             ->with(['branch', 'subscriptions.membership']);
 
-        // Búsqueda por nombre, email o CI
+        
         if ($search = $request->query('search')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
@@ -35,7 +35,7 @@ class MemberController extends Controller
             });
         }
 
-        // Filtro por estado de suscripción
+        
         if ($status = $request->query('status')) {
             if ($status === 'active') {
                 $query->whereHas('subscriptions', function ($q) {
@@ -65,7 +65,7 @@ class MemberController extends Controller
             }
         }
 
-        // Filtro por sucursal forzado para manager
+        
         $branchId = $user->role === 'manager' ? $user->branch_id : $request->query('branch_id');
         if ($branchId) {
             $query->where('branch_id', $branchId);
@@ -113,19 +113,19 @@ class MemberController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // Crear el usuario como miembro
+        
         $member = User::create([
             'tenant_id' => $tenantId,
             'branch_id' => $request->branch_id,
             'name'      => $request->name,
             'email'     => $request->email,
             'ci_number' => $request->ci_number,
-            'password'  => Hash::make($request->password ?? $request->ci_number ?? 'synx1234'), // Contraseña por defecto es el CI
+            'password'  => Hash::make($request->password ?? $request->ci_number ?? 'synx1234'), 
             'role'      => 'member',
             'qr_token'  => Str::random(12),
         ]);
 
-        // Si se asignó un plan, crear la suscripción automáticamente
+        
         if ($request->membership_id) {
             $membership = Membership::where('tenant_id', $tenantId)->findOrFail($request->membership_id);
 
@@ -193,7 +193,7 @@ class MemberController extends Controller
             ->where('role', 'member')
             ->findOrFail($id);
 
-        // Cancelar suscripciones activas
+        
         $member->subscriptions()->where('status', 'active')->update(['status' => 'expired']);
 
         $member->delete();

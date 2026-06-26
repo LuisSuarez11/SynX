@@ -23,12 +23,12 @@ class SubscriptionController extends Controller
             $q->where('tenant_id', $tenantId);
         })->with(['user', 'membership', 'branch']);
 
-        // Filtro por estado
+        
         if ($status = $request->query('status')) {
             $query->where('status', $status);
         }
 
-        // Filtro por sucursal
+        
         $branchId = $user->role === 'manager' ? $user->branch_id : $request->query('branch_id');
         if ($branchId) {
             $query->where('branch_id', $branchId)
@@ -62,7 +62,7 @@ class SubscriptionController extends Controller
         $tenantId = $request->user()->tenant_id;
         $membership = Membership::where('tenant_id', $tenantId)->findOrFail($request->membership_id);
 
-        // Buscar si el usuario ya tiene una suscripción activa
+        
         $activeSubscription = Subscription::where('user_id', $request->user_id)
             ->whereIn('status', ['active', 'pending'])
             ->orderBy('end_date', 'desc')
@@ -71,13 +71,13 @@ class SubscriptionController extends Controller
         $startDate = now();
         $status = 'active';
 
-        // Si tiene una suscripción que vence en el futuro, apilamos la nueva
+        
         if ($activeSubscription && $activeSubscription->end_date && \Carbon\Carbon::parse($activeSubscription->end_date)->gte(now()->startOfDay())) {
             $startDate = \Carbon\Carbon::parse($activeSubscription->end_date);
-            $status = 'pending'; // Se activará cuando la actual termine
+            $status = 'pending'; 
         }
 
-        // Crear nueva suscripción
+        
         $subscription = Subscription::create([
             'user_id'           => $request->user_id,
             'membership_id'     => $membership->id,
@@ -92,7 +92,7 @@ class SubscriptionController extends Controller
             'status'            => $status,
         ]);
 
-        // Registrar pago si se indicó
+        
         if ($request->register_payment) {
             Payment::create([
                 'tenant_id'       => $tenantId,

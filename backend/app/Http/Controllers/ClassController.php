@@ -18,7 +18,7 @@ class ClassController extends Controller
      * ==========================================
      */
 
-    // Obtener catálogo de tipos de clases
+    
     public function indexClasses(Request $request)
     {
         $tenantId = $request->user()->tenant_id;
@@ -26,7 +26,7 @@ class ClassController extends Controller
         return response()->json(['classes' => $classes]);
     }
 
-    // Crear un tipo de clase
+    
     public function storeClass(Request $request)
     {
         $tenantId = $request->user()->tenant_id;
@@ -41,7 +41,7 @@ class ClassController extends Controller
         return response()->json(['message' => 'Clase creada', 'class' => $class], 201);
     }
 
-    // Obtener horarios (Schedules) de una sucursal (Para Admin o Miembro)
+    
     public function indexSchedules(Request $request)
     {
         $user = $request->user();
@@ -57,11 +57,11 @@ class ClassController extends Controller
             $schedules->where('branch_id', $branchId);
         }
 
-        // Si es miembro, filtramos por hoy y futuro cercano, etc. Por ahora devolvemos todos.
+        
         return response()->json(['schedules' => $schedules->get()]);
     }
 
-    // Crear un horario de clase
+    
     public function storeSchedule(Request $request)
     {
         $user = $request->user();
@@ -69,7 +69,7 @@ class ClassController extends Controller
             return response()->json(['error' => 'No autorizado'], 403);
 
         $request->validate([
-            'name' => 'nullable|string', // Si se envía, puede crear una nueva clase
+            'name' => 'nullable|string', 
             'gym_class_id' => 'nullable|exists:gym_classes,id',
             'instructor_id' => 'nullable|exists:users,id',
             'is_recurring' => 'required|boolean',
@@ -83,7 +83,7 @@ class ClassController extends Controller
 
         $gymClassId = $request->gym_class_id;
 
-        // Auto crear clase si se envía 'name' y no 'gym_class_id'
+        
         if (!$gymClassId && $request->filled('name')) {
             $newClass = GymClass::create([
                 'tenant_id' => $user->tenant_id,
@@ -117,7 +117,7 @@ class ClassController extends Controller
      * ==========================================
      */
 
-    // Listar reservas de un horario específico para una fecha (Para Admin)
+    
     public function getReservations(Request $request, $scheduleId)
     {
         $date = $request->query('date', today()->toDateString());
@@ -130,17 +130,17 @@ class ClassController extends Controller
         return response()->json(['reservations' => $reservations]);
     }
 
-    // Reservar un cupo (Puede hacerlo el Miembro o el Admin manualmente)
+    
     public function reserve(Request $request)
     {
         $request->validate([
             'class_schedule_id' => 'required|exists:class_schedules,id',
-            'date' => 'required|date' // La fecha de la clase a la que quiere asistir
+            'date' => 'required|date' 
         ]);
 
         $user = $request->user();
 
-        // Si el admin está reservando manualmente para un miembro, enviará el user_id
+        
         if ($user->role !== 'member') {
             $request->validate(['user_id' => 'required|exists:users,id']);
             $memberId = $request->user_id;
@@ -152,7 +152,7 @@ class ClassController extends Controller
         $scheduleId = $request->class_schedule_id;
 
         return DB::transaction(function () use ($memberId, $date, $scheduleId, $request) {
-            // Validar capacidad
+            
             $schedule = ClassSchedule::findOrFail($scheduleId);
             $currentReservations = Reservation::where('class_schedule_id', $scheduleId)
                 ->whereDate('reservation_date', $date)
@@ -163,7 +163,7 @@ class ClassController extends Controller
                 return response()->json(['error' => 'La clase ya está llena'], 400);
             }
 
-            // Validar que no tenga reserva ya para ese día y clase
+            
             $alreadyReserved = Reservation::where('user_id', $memberId)
                 ->where('class_schedule_id', $scheduleId)
                 ->whereDate('reservation_date', $date)
@@ -174,8 +174,8 @@ class ClassController extends Controller
                 return response()->json(['error' => 'El miembro ya tiene una reserva activa para esta clase'], 400);
             }
 
-            // Descontar crédito
-            // Buscar subscripción credit_based activa con creditos > 0
+            
+            
             $activeSub = Subscription::where('user_id', $memberId)
                 ->where('status', 'active')
                 ->whereHas('membership', function ($q) {
@@ -185,9 +185,9 @@ class ClassController extends Controller
                 ->first();
 
             if (!$activeSub) {
-                // Si no tiene subscripción de créditos, verificamos si tiene una normal (time_based)
-                // Depende de las reglas de negocio, pero asumamos que las clases son SOLO por créditos o planes completos.
-                // Si permitimos planes completos:
+                
+                
+                
                 $timeSub = Subscription::where('user_id', $memberId)
                     ->where('status', 'active')
                     ->whereHas('membership', function ($q) {
@@ -202,11 +202,11 @@ class ClassController extends Controller
                     return response()->json(['error' => 'No tiene créditos suficientes ni un plan activo válido para reservar.'], 403);
                 }
             } else {
-                // Descontar el crédito
+                
                 $activeSub->decrement('remaining_credits');
             }
 
-            // Crear reserva
+            
             $reservation = Reservation::create([
                 'user_id' => $memberId,
                 'class_schedule_id' => $scheduleId,
@@ -221,7 +221,7 @@ class ClassController extends Controller
         });
     }
 
-    // Cancelar reserva (Refund del crédito si es 4 hrs antes)
+    
     public function cancelReservation(Request $request, $id)
     {
         $user = $request->user();
@@ -237,26 +237,26 @@ class ClassController extends Controller
 
         $schedule = ClassSchedule::findOrFail($reservation->class_schedule_id);
 
-        // Calcular hora de la clase
+        
         $classDateTime = Carbon::parse($reservation->reservation_date . ' ' . $schedule->start_time);
 
         return DB::transaction(function () use ($reservation, $classDateTime, $user) {
             $now = now();
-            // Regla: 4 horas de anticipación
-            $hoursDifference = $now->diffInHours($classDateTime, false); // false para que pueda ser negativo si ya pasó
+            
+            $hoursDifference = $now->diffInHours($classDateTime, false); 
 
-            // Si el Admin cancela manualmente, siempre reembolsamos? Asumiremos que sí, para evitar quejas.
-            // Si el miembro cancela, verificamos las 4 hrs.
+            
+            
             if ($user->role === 'member' && $hoursDifference < 4) {
-                // Cancelamos pero NO reembolsamos (o no dejamos cancelar)
-                // "tiene 4 horas antes minimo para marcar q no podra asistir y recuperar su credito"
-                // Cancelamos pero con penalidad (sin refund).
+                
+                
+                
                 $reservation->update(['status' => 'cancelled']);
                 return response()->json(['message' => 'Reserva cancelada (Sin reembolso por cancelación tardía, < 4 hrs)']);
             }
 
-            // Reembolsar el crédito
-            // Devolvemos el crédito a la suscripción de creditos activa
+            
+            
             $activeSub = Subscription::where('user_id', $reservation->user_id)
                 ->where('status', 'active')
                 ->whereHas('membership', function ($q) {

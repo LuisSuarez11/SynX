@@ -12,11 +12,11 @@ const MembersPage = () => {
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
   
-  // Paginación
+  
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
 
-  // Modal State
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingMember, setEditingMember] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -28,7 +28,7 @@ const MembersPage = () => {
     membership_id: ''
   });
 
-  // Modal Renovar State
+  
   const [isRenewModalOpen, setIsRenewModalOpen] = useState(false);
   const [renewingMember, setRenewingMember] = useState(null);
   const [renewFormData, setRenewFormData] = useState({
@@ -37,11 +37,11 @@ const MembersPage = () => {
     payment_method: 'efectivo'
   });
 
-  // Sucursales disponibles (del usuario logueado)
+  
   const currentUser = JSON.parse(localStorage.getItem('synx_user') || '{}');
   const availableBranches = currentUser?.tenant?.branches || [];
 
-  // Cargar Miembros
+  
   const fetchMembers = async (page = 1) => {
     try {
       setLoading(true);
@@ -61,11 +61,11 @@ const MembersPage = () => {
     }
   };
 
-  // Cargar Membresías (Planes) para el form
+  
   const fetchMemberships = async () => {
     try {
       const response = await api.get('/admin/memberships');
-      // Asegurarnos de usar los datos correctos si viene paginado o no
+      
       setMemberships(response.data.data || response.data);
     } catch (error) {
       console.error("Error fetching memberships:", error);
@@ -77,7 +77,7 @@ const MembersPage = () => {
     fetchMemberships();
   }, [selectedBranch, search, statusFilter]);
 
-  // Manejar el submit del form (Crear / Editar)
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -92,18 +92,18 @@ const MembersPage = () => {
       }
 
       if (editingMember) {
-        // Actualizar (No enviamos el membership_id porque no lo soportamos en Update por ahora según el controller)
+        
         delete payload.membership_id; 
         await api.put(`/admin/members/${editingMember.id}`, payload);
       } else {
-        // Crear
+        
         await api.post('/admin/members', payload);
       }
       
       setIsModalOpen(false);
       setFormData({ name: '', email: '', ci_number: '', branch_id: '', membership_id: '' });
       setEditingMember(null);
-      fetchMembers(currentPage); // Recargar lista
+      fetchMembers(currentPage); 
     } catch (error) {
       console.error("Error saving member:", error);
       alert("Error al guardar el miembro. Revisa los datos o si el correo ya existe.");
@@ -112,7 +112,7 @@ const MembersPage = () => {
     }
   };
 
-  // Manejar Eliminar
+  
   const handleDelete = async (id) => {
     if (!window.confirm("¿Estás seguro de eliminar este miembro? Esto cancelará su plan actual.")) return;
     
@@ -124,7 +124,7 @@ const MembersPage = () => {
     }
   };
 
-  // Abrir modal de edición
+  
   const openEditModal = (member) => {
     setEditingMember(member);
     setFormData({
@@ -132,12 +132,12 @@ const MembersPage = () => {
       email: member.email,
       ci_number: member.ci_number || '',
       branch_id: member.branch_id || '',
-      membership_id: '' // En edición no asignamos membresía nueva por ahora
+      membership_id: '' 
     });
     setIsModalOpen(true);
   };
 
-  // Abrir modal de renovación
+  
   const openRenewModal = (member) => {
     setRenewingMember(member);
     setRenewFormData({
@@ -148,7 +148,7 @@ const MembersPage = () => {
     setIsRenewModalOpen(true);
   };
 
-  // Manejar el submit de renovación
+  
   const handleRenewSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -161,7 +161,7 @@ const MembersPage = () => {
       await api.post('/admin/subscriptions', payload);
       setIsRenewModalOpen(false);
       setRenewingMember(null);
-      fetchMembers(currentPage); // Recargar lista
+      fetchMembers(currentPage); 
     } catch (error) {
       console.error("Error renewing subscription:", error);
       alert("Error al renovar el plan.");
@@ -173,7 +173,7 @@ const MembersPage = () => {
   return (
     <div className="max-w-[1400px] mx-auto space-y-6">
       
-      {/* Header & Actions */}
+      {}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[28px] font-bold text-[#F8FAFC] tracking-tight">Gestión de Miembros</h1>
@@ -205,7 +205,7 @@ const MembersPage = () => {
         </div>
       </div>
 
-      {/* Filters */}
+      {}
       <div className="flex flex-wrap items-center gap-2">
         <button onClick={() => setStatusFilter('')} className={`px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all ${statusFilter === '' ? 'bg-[#6D5DF6]/20 text-[#6D5DF6] border border-[#6D5DF6]/50' : 'bg-[#0A0C14] text-[#D7DCE8]/60 border border-[#1E2330] hover:text-[#F8FAFC]'}`}>Todos</button>
         <button onClick={() => setStatusFilter('active')} className={`px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all ${statusFilter === 'active' ? 'bg-[#2ECC71]/20 text-[#2ECC71] border border-[#2ECC71]/50' : 'bg-[#0A0C14] text-[#D7DCE8]/60 border border-[#1E2330] hover:text-[#F8FAFC]'}`}>Activos</button>
@@ -213,7 +213,7 @@ const MembersPage = () => {
         <button onClick={() => setStatusFilter('expired')} className={`px-4 py-1.5 rounded-lg text-[12px] font-bold transition-all ${statusFilter === 'expired' ? 'bg-[#FF4757]/20 text-[#FF4757] border border-[#FF4757]/50' : 'bg-[#0A0C14] text-[#D7DCE8]/60 border border-[#1E2330] hover:text-[#F8FAFC]'}`}>Vencidos</button>
       </div>
 
-      {/* Table Container */}
+      {}
       <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl overflow-hidden relative min-h-[400px]">
         {loading ? (
           <div className="absolute inset-0 flex items-center justify-center bg-[#0A0C14]/50 z-10 backdrop-blur-sm">
@@ -239,7 +239,7 @@ const MembersPage = () => {
             </thead>
             <tbody className="divide-y divide-[#1E2330]">
               {members.map((member) => {
-                // Obtener suscripción activa y calcular estados
+                
                 const today = new Date();
                 today.setHours(0,0,0,0);
 
@@ -330,7 +330,7 @@ const MembersPage = () => {
           </table>
         </div>
         
-        {/* Paginación (Simple) */}
+        {}
         {totalPages > 1 && (
           <div className="px-6 py-4 border-t border-[#1E2330] flex justify-between items-center bg-[#12151D]/50">
             <button 
@@ -352,7 +352,7 @@ const MembersPage = () => {
         )}
       </div>
 
-      {/* Modal Crear/Editar */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -370,7 +370,7 @@ const MembersPage = () => {
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               className="relative w-full max-w-lg bg-[#0A0C14] border border-[#1E2330] rounded-2xl shadow-2xl overflow-hidden"
             >
-              {/* Header Modal */}
+              {}
               <div className="flex items-center justify-between p-6 border-b border-[#1E2330] bg-[#12151D]/50">
                 <h3 className="text-xl font-bold text-[#F8FAFC]">
                   {editingMember ? 'Editar Miembro' : 'Nuevo Miembro'}
@@ -380,11 +380,11 @@ const MembersPage = () => {
                 </button>
               </div>
 
-              {/* Body Modal */}
+              {}
               <form onSubmit={handleSubmit} className="p-6 space-y-5">
                 
                 <div className="space-y-4">
-                  {/* Nombre */}
+                  {}
                   <div>
                     <label className="block text-[12px] font-bold text-[#D7DCE8]/70 mb-1.5 uppercase tracking-wider">Nombre Completo</label>
                     <div className="relative">
@@ -400,7 +400,7 @@ const MembersPage = () => {
                     </div>
                   </div>
 
-                  {/* Email & CI */}
+                  {}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
                       <label className="block text-[12px] font-bold text-[#D7DCE8]/70 mb-1.5 uppercase tracking-wider">Correo Electrónico</label>
@@ -431,7 +431,7 @@ const MembersPage = () => {
                     </div>
                   </div>
 
-                  {/* Sucursal (Solo si estamos en vista General) */}
+                  {}
                   {!selectedBranch && (
                     <div>
                       <label className="block text-[12px] font-bold text-[#D7DCE8]/70 mb-1.5 uppercase tracking-wider">Sucursal de Inscripción</label>
@@ -451,7 +451,7 @@ const MembersPage = () => {
                     </div>
                   )}
 
-                  {/* Plan de Suscripción (Solo al crear) */}
+                  {}
                   {!editingMember && (
                     <div className="pt-2">
                       <label className="block text-[12px] font-bold text-[#D7DCE8]/70 mb-1.5 uppercase tracking-wider">Asignar Plan Inicial (Opcional)</label>
@@ -471,7 +471,7 @@ const MembersPage = () => {
                   )}
                 </div>
 
-                {/* Footer Modal */}
+                {}
                 <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#1E2330]">
                   <button 
                     type="button"
@@ -495,7 +495,7 @@ const MembersPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Modal Renovar Plan */}
+      {}
       <AnimatePresence>
         {isRenewModalOpen && renewingMember && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

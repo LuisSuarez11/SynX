@@ -9,7 +9,7 @@ export default function ContactForm() {
   const [fieldErrors, setFieldErrors] = useState({});
   const [focusedField, setFocusedField] = useState(null);
 
-  // validar q el email tenga formato correcto
+  
   const validateEmail = (email) => {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
@@ -38,7 +38,7 @@ export default function ContactForm() {
     const errors = validateForm();
     setFieldErrors(errors);
 
-    // si no hay errores limpia todo y muestra el modal
+    
     if (Object.keys(errors).length === 0) {
       setFormData({ name: '', email: '', phone: '' });
       setFieldErrors({});
@@ -56,7 +56,7 @@ export default function ContactForm() {
       </div>
 
       <div className="grid lg:grid-cols-2 relative z-10">
-        {/* lado izq con foto de gym */}
+        {}
         <div className="relative border-b lg:border-b-0 lg:border-r border-[#1E2330] overflow-hidden min-h-[400px] lg:min-h-0">
           <img
             src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?q=80&w=1200&auto=format&fit=crop"
@@ -97,11 +97,11 @@ export default function ContactForm() {
           </div>
         </div>
 
-        {/* lado der con el formulario */}
+        {}
         <div className="p-8 md:p-14 flex flex-col justify-center">
           <form onSubmit={handleFormSubmit} noValidate className="space-y-8 relative z-10">
 
-            {/* nombre */}
+            {}
             <div>
               <label htmlFor="contact-name" className="font-mono-tech text-[10px] text-[#6D5DF6] uppercase tracking-widest mb-3 block">
                 Nombre completo <span className="text-red-400">*</span>
@@ -141,7 +141,7 @@ export default function ContactForm() {
               )}
             </div>
 
-            {/* email */}
+            {}
             <div>
               <label htmlFor="contact-email" className="font-mono-tech text-[10px] text-[#6D5DF6] uppercase tracking-widest mb-3 block">
                 Correo electrónico <span className="text-red-400">*</span>
@@ -181,7 +181,7 @@ export default function ContactForm() {
               )}
             </div>
 
-            {/* telefono (opcional) */}
+            {}
             <div>
               <label htmlFor="contact-phone" className="font-mono-tech text-[10px] text-[#6D5DF6] uppercase tracking-widest mb-3 block">
                 Teléfono <span className="text-[#D7DCE8]/60">(opcional)</span>
@@ -224,7 +224,7 @@ export default function ContactForm() {
         </div>
       </div>
 
-      {/* modal de exito cuando se envia */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
@@ -251,7 +251,7 @@ export default function ContactForm() {
                 <X className="w-5 h-5" />
               </button>
 
-              {/* imagen del modal */}
+              {}
               <div className="relative w-full h-44 overflow-hidden">
                 <img
                   src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=800&auto=format&fit=crop"

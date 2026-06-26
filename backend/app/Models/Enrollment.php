@@ -9,7 +9,7 @@ class Enrollment extends Model
     protected $fillable = [
         'class_schedule_id',
         'user_id',
-        'status', // 'enrolled', 'cancelled'
+        'status', 
     ];
 
     public function classSchedule()

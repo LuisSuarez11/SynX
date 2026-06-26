@@ -9,7 +9,7 @@ class Membership extends Model
     protected $fillable = [
         'tenant_id',
         'name',
-        'type',           // 'time_based' o 'credit_based'
+        'type',           
         'duration_days',
         'credits_amount',
         'price',

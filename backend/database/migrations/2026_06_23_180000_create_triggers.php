@@ -7,11 +7,11 @@ return new class extends Migration
 {
     public function up(): void
     {
-        // ═══════════════════════════════════════════════════════════════
-        // TRIGGER 1: Auto-expirar suscripciones vencidas
-        // Se ejecuta ANTES de consultar una suscripción.
-        // Si la fecha actual supera end_date, cambia status a 'expired'.
-        // ═══════════════════════════════════════════════════════════════
+        
+        
+        
+        
+        
         DB::unprepared('
             CREATE TRIGGER trg_auto_expire_subscription
             BEFORE UPDATE ON subscriptions
@@ -26,12 +26,12 @@ return new class extends Migration
             END
         ');
 
-        // ═══════════════════════════════════════════════════════════════
-        // TRIGGER 2: Descontar créditos al registrar asistencia
-        // Cuando se inserta una nueva asistencia, busca la suscripción
-        // activa del usuario. Si es de tipo 'credit_based', le resta 1
-        // crédito. Si llega a 0, la marca como 'expired'.
-        // ═══════════════════════════════════════════════════════════════
+        
+        
+        
+        
+        
+        
         DB::unprepared('
             CREATE TRIGGER trg_deduct_credit_on_attendance
             AFTER INSERT ON attendances
@@ -64,11 +64,11 @@ return new class extends Migration
             END
         ');
 
-        // ═══════════════════════════════════════════════════════════════
-        // TRIGGER 3: Log de auditoría al modificar un pago
-        // Registra en una tabla de auditoría cada vez que se actualiza
-        // el monto de un pago (prevención de fraude).
-        // ═══════════════════════════════════════════════════════════════
+        
+        
+        
+        
+        
         DB::unprepared('
             CREATE TABLE IF NOT EXISTS payment_audit_log (
                 id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,

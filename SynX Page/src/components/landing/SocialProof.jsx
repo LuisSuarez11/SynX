@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Star, Quote, TrendingUp, Users, Clock, Shield } from 'lucide-react';
 
-// contador q se anima cuando lo ves en pantalla
+
 function AnimatedCounter({ target, suffix = '', prefix = '' }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
@@ -40,7 +40,7 @@ function AnimatedCounter({ target, suffix = '', prefix = '' }) {
   );
 }
 
-// testimonios de gyms de santa cruz
+
 const testimonials = [
   {
     name: 'Belen Fitness Center',
@@ -86,7 +86,7 @@ const metrics = [
 export default function SocialProof() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
 
-  // va cambiando el testimonio resaltado cada 5 seg
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -123,7 +123,7 @@ export default function SocialProof() {
           </p>
         </div>
 
-        {/* metricas con contadores */}
+        {}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -144,7 +144,7 @@ export default function SocialProof() {
           ))}
         </motion.div>
 
-        {/* cards de testimonios */}
+        {}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {testimonials.map((t, i) => (
             <motion.div
@@ -178,7 +178,7 @@ export default function SocialProof() {
                 ))}
               </div>
 
-              {/* logo del gym con iniciales */}
+              {}
               <div className="flex items-center gap-3 pt-4 border-t border-[#1E2330]">
                 <div className={`w-11 h-11 rounded-xl bg-gradient-to-br ${t.color} flex items-center justify-center shrink-0 shadow-lg`}>
                   <span className="text-[#F8FAFC] font-black text-xs tracking-tight">{t.initials}</span>
@@ -192,7 +192,7 @@ export default function SocialProof() {
           ))}
         </div>
 
-        {/* puntitos del autoplay */}
+        {}
         <div className="flex justify-center gap-2 mt-10">
           {testimonials.map((_, i) => (
             <button

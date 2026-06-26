@@ -12,7 +12,7 @@ class Attendance extends Model
         'user_id',
         'check_in_time',
         'check_out_time',
-        'access_method',   // 'qr', 'nfc', 'manual'
+        'access_method',   
     ];
 
     protected function casts(): array

@@ -12,7 +12,7 @@ const MemberClassesPage = () => {
   const [hasValidPlan, setHasValidPlan] = useState(false);
 
   const diasMapa = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
-  // For demo purposes, reserve for "today" or the next available day
+  
   const reservationDate = new Date().toISOString().split('T')[0];
 
   const fetchData = async () => {
@@ -20,7 +20,7 @@ const MemberClassesPage = () => {
       setLoading(true);
       const [schedRes, dashboardRes] = await Promise.all([
         api.get('/member/schedules'),
-        api.get('/member/dashboard') // To get current credits
+        api.get('/member/dashboard') 
       ]);
       setSchedules(schedRes.data.schedules || []);
       
@@ -30,7 +30,7 @@ const MemberClassesPage = () => {
         if (membership.type === 'credit_based') {
           setUserCredits(membership.remaining_credits || 0);
         } else {
-          // If it's time_based, we can either allow unlimited or not show credits
+          
           setUserCredits('∞');
         }
       }
@@ -51,7 +51,7 @@ const MemberClassesPage = () => {
         date: reservationDate
       });
       alert('¡Reserva confirmada con éxito!');
-      fetchData(); // Refresh credits
+      fetchData(); 
     } catch (err) {
       alert(err.response?.data?.error || "Error al reservar");
     } finally {
@@ -66,7 +66,7 @@ const MemberClassesPage = () => {
         <p className="text-[14px] text-[#D7DCE8]/60 mt-1">Reserva tu lugar en nuestras clases. Puedes cancelar hasta 4 horas antes.</p>
       </motion.div>
 
-      {/* Tarjeta de estado de créditos */}
+      {}
       <motion.div 
         initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2 }}
         className="bg-gradient-to-br from-[#12151D] to-[#0A0C14] border border-[#1E2330] rounded-3xl p-6 relative overflow-hidden"

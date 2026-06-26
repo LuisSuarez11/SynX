@@ -105,7 +105,7 @@ class MembershipController extends Controller
 
         $membership = Membership::where('tenant_id', $tenantId)->findOrFail($id);
 
-        // Verificar si tiene suscripciones activas
+        
         $activeSubs = $membership->subscriptions()->where('status', 'active')->count();
         if ($activeSubs > 0) {
             return response()->json([

@@ -13,7 +13,7 @@ class BranchController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
-        // Si el usuario es manager, solo ve su sucursal, pero esto es principalmente para owner
+        
         if ($user->role === 'owner') {
             $branches = Branch::where('tenant_id', $user->tenant_id)->get();
         } else {
@@ -84,7 +84,7 @@ class BranchController extends Controller
 
         $branch = Branch::where('id', $id)->where('tenant_id', $user->tenant_id)->firstOrFail();
         
-        // Podríamos requerir validaciones extras, ej. si tiene usuarios
+        
         $branch->delete();
 
         return response()->json(['message' => 'Sucursal eliminada exitosamente']);

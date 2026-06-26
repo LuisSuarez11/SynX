@@ -85,7 +85,7 @@ const SubscriptionsPage = () => {
         </button>
       </div>
 
-      {/* Filter tabs */}
+      {}
       <div className="flex gap-2">
         {filterBtns.map(f => (
           <button key={f.value} onClick={() => setStatusFilter(f.value)}
@@ -95,7 +95,7 @@ const SubscriptionsPage = () => {
         ))}
       </div>
 
-      {/* Table */}
+      {}
       <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl overflow-hidden min-h-[400px] relative">
         {loading && (
           <div className="absolute inset-0 flex items-center justify-center bg-[#0A0C14]/60 backdrop-blur-sm z-10">
@@ -147,7 +147,7 @@ const SubscriptionsPage = () => {
         </div>
       </div>
 
-      {/* Modal */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

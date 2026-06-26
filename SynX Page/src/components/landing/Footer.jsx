@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-16 relative z-10">
         <div className="grid md:grid-cols-3 gap-10 md:gap-12">
 
-          {/* marca */}
+          {}
           <div className="flex flex-col items-center md:items-start text-center md:text-left">
             <div className="flex items-center mb-5">
               <SynxLogo className="w-28 h-auto opacity-90 drop-shadow-[0_0_15px_rgba(109, 93, 246,0.2)]" />
@@ -22,7 +22,7 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* links de secciones */}
+          {}
           <div className="space-y-4 text-center md:text-left mt-4 md:mt-0">
             <span className="font-mono-tech text-[10px] text-[#6D5DF6] uppercase tracking-widest block">Secciones</span>
             <a href="#solucion" className="block text-sm text-[#D7DCE8]/80 hover:text-[#F8FAFC] transition-colors">Problemática</a>
@@ -32,7 +32,7 @@ export default function Footer() {
             <a href="#contacto" className="block text-sm text-[#D7DCE8]/80 hover:text-[#F8FAFC] transition-colors">Solicitar Acceso</a>
           </div>
 
-          {/* links legales */}
+          {}
           <div className="space-y-4 text-center md:text-left mt-4 md:mt-0">
             <span className="font-mono-tech text-[10px] text-[#6D5DF6] uppercase tracking-widest block">Legal</span>
             <a href="#terminos" className="block text-sm text-[#D7DCE8]/80 hover:text-[#F8FAFC] transition-colors">Términos de Servicio</a>

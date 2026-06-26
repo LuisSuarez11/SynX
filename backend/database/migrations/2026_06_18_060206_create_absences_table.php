@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('enrollment_id')->constrained()->cascadeOnDelete();
             $table->date('absence_date');
-            $table->string('status')->default('pending'); // pending, approved_for_recovery
+            $table->string('status')->default('pending'); 
             $table->date('recovered_date')->nullable();
             $table->timestamps();
         });

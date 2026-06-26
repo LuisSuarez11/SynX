@@ -12,7 +12,7 @@ const StatCard = ({ title, value, trend, icon: Icon, delay, chartData }) => (
     transition={{ duration: 0.5, delay }}
     className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-5 relative overflow-hidden group hover:border-[#6D5DF6]/40 transition-all flex flex-col h-[160px]"
   >
-    {/* Contenido principal superior */}
+    {}
     <div className="flex justify-between items-start mb-2 relative z-10">
       <div className="p-3 bg-gradient-to-br from-[#1E2330]/80 to-[#12151D] rounded-2xl border border-[#1E2330]">
         <Icon className="w-5 h-5 text-[#6D5DF6]" />
@@ -28,7 +28,7 @@ const StatCard = ({ title, value, trend, icon: Icon, delay, chartData }) => (
       {trend}
     </div>
 
-    {/* Mini Chart en el fondo inferior */}
+    {}
     <div className="absolute bottom-0 left-0 w-full h-1/2 opacity-50">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={chartData || []}>
@@ -46,7 +46,7 @@ const AdminDashboard = () => {
   const isOwner = user?.role === 'owner';
   
   const [loading, setLoading] = useState(true);
-  const [period, setPeriod] = useState('week'); // day, week, month, year
+  const [period, setPeriod] = useState('week'); 
   const [showPeriodMenu, setShowPeriodMenu] = useState(false);
   const [data, setData] = useState({
     stats: {
@@ -101,7 +101,7 @@ const AdminDashboard = () => {
   return (
     <div className="max-w-[1400px] mx-auto space-y-8">
       
-      {/* Header Section */}
+      {}
       <div className="flex justify-between items-end">
         <div>
           <motion.h1 
@@ -131,7 +131,7 @@ const AdminDashboard = () => {
         </motion.div>
       </div>
 
-      {/* Stats Grid */}
+      {}
       <div className={`grid grid-cols-1 sm:grid-cols-2 ${isOwner ? 'lg:grid-cols-4' : 'lg:grid-cols-2'} gap-6`}>
         {isOwner && (
           <>
@@ -171,13 +171,13 @@ const AdminDashboard = () => {
         />
       </div>
 
-      {/* Main Content Area (Charts / Tables) */}
+      {}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         
-        {/* Charts Column */}
+        {}
         <div className="lg:col-span-2 flex flex-col gap-6">
           
-          {/* Chart 1: Evolución de Miembros Activos */}
+          {}
           <motion.div 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
             className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-6 h-[300px] flex flex-col relative overflow-hidden"
@@ -210,7 +210,7 @@ const AdminDashboard = () => {
             </div>
           </motion.div>
 
-          {/* Chart 2: Flujo de Asistencia */}
+          {}
           <motion.div 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }}
             className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-6 h-[300px] flex flex-col relative overflow-hidden"
@@ -262,7 +262,7 @@ const AdminDashboard = () => {
           </motion.div>
         </div>
 
-        {/* Recent Activity Column */}
+        {}
         <motion.div 
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}
           className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-6 relative overflow-hidden flex flex-col lg:max-h-[624px]"
@@ -307,7 +307,7 @@ const AdminDashboard = () => {
         </motion.div>
       </div>
 
-      {/* Owner Global Section: Branches Performance */}
+      {}
       {isOwner && !selectedBranch && data?.branches_performance && (
         <motion.div 
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}

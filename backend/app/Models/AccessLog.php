@@ -11,8 +11,8 @@ class AccessLog extends Model
         'branch_id',
         'user_id',
         'device_id',
-        'access_method',  // 'nfc', 'qr', 'biometric', 'manual'
-        'status',         // 'granted', 'denied'
+        'access_method',  
+        'status',         
         'logged_at',
     ];
 

@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('gym_class_id')->constrained('gym_classes')->cascadeOnDelete();
             $table->foreignId('branch_id')->constrained()->cascadeOnDelete();
             $table->foreignId('instructor_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->string('day_of_week'); // e.g. Lunes, Martes
+            $table->string('day_of_week'); 
             $table->time('start_time');
             $table->time('end_time');
             $table->integer('capacity')->default(15);

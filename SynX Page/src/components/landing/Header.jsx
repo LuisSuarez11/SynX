@@ -13,9 +13,9 @@ export default function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 relative">
             
-            <div className="w-8 md:hidden"></div> {/* Espaciador móvil */}
+            <div className="w-8 md:hidden"></div> {}
 
-            {/* logo */}
+            {}
             <motion.Link
               to="/"
               initial={{ opacity: 0 }}
@@ -27,7 +27,7 @@ export default function Header() {
               <SynxLogo className="w-40 md:w-48 h-auto drop-shadow-[0_0_15px_rgba(109,93,246,0.3)] hover:scale-105 transition-transform" />
             </motion.Link>
             
-            {/* nav desktop */}
+            {}
             <motion.nav
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
@@ -67,7 +67,7 @@ export default function Header() {
               </div>
             </motion.nav>
 
-            {/* hamburguesa mobile */}
+            {}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden text-[#F8FAFC] p-2 hover:text-[#6D5DF6] transition-colors"
@@ -79,7 +79,7 @@ export default function Header() {
         </div>
       </div>
 
-      {/* menu mobile fullscreen */}
+      {}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div

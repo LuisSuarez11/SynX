@@ -9,7 +9,7 @@ export default function Pricing() {
     <section id="precios" className="relative bg-[#040508] border-t border-[#1E2330] overflow-hidden">
       <div className="absolute inset-0 grid-lines pointer-events-none z-0"></div>
 
-      {/* foto de fondo */}
+      {}
       <div className="absolute inset-0 z-0">
         <img
           src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1920&auto=format&fit=crop"
@@ -40,10 +40,10 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-        {/* los 3 planes */}
+        {}
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">
 
-          {/* plan free */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -89,7 +89,7 @@ export default function Pricing() {
             </a>
           </motion.div>
 
-          {/* plan pro - el recomendado */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -101,7 +101,7 @@ export default function Pricing() {
           >
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-[#6D5DF6]/20 blur-[80px] rounded-full pointer-events-none"></div>
 
-            {/* badge popular */}
+            {}
             <div className="absolute top-6 right-6 flex items-center gap-1.5 px-3 py-1 bg-[#6D5DF6] rounded-full">
               <Zap className="w-3 h-3 text-[#F8FAFC]" />
               <span className="font-mono-tech text-[10px] text-[#F8FAFC] uppercase tracking-widest font-bold">POPULAR</span>
@@ -143,7 +143,7 @@ export default function Pricing() {
             </div>
           </motion.div>
 
-          {/* plan enterprise */}
+          {}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -188,7 +188,7 @@ export default function Pricing() {
           </motion.div>
         </div>
 
-        {/* marquee de features */}
+        {}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

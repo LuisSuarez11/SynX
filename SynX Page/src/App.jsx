@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 
-// Rutas Protegidas y Layouts
+
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import AdminLayout from './layouts/AdminLayout';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -23,11 +23,11 @@ function App() {
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <Routes>
-        {/* Rutas Públicas */}
+        {}
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
 
-        {/* Rutas Protegidas (Dueños y Managers) */}
+        {}
         <Route element={<ProtectedRoute allowedRoles={['owner', 'manager']} />}>
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="dashboard" replace />} />
@@ -43,7 +43,7 @@ function App() {
           </Route>
         </Route>
 
-        {/* Rutas Protegidas (Miembros / Clientes) */}
+        {}
         <Route element={<ProtectedRoute allowedRoles={['member']} />}>
           <Route path="/member" element={<MemberLayout />}>
             <Route index element={<Navigate to="home" replace />} />

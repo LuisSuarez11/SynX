@@ -29,11 +29,11 @@ const AdminLayout = () => {
   const isOwner = user?.role === 'owner';
   const isManager = user?.role === 'manager';
 
-  // selectedBranch es null si es "General", o el objeto branch si es una específica
+  
   const [selectedBranch, setSelectedBranch] = useState(() => {
-    // Si es manager, forzamos la selección a su primera (y única) sucursal si la tiene
+    
     if (isManager && branches.length > 0) {
-      // Buscar la sucursal asignada o tomar la primera
+      
       return branches.find(b => b.id === user.branch_id) || branches[0];
     }
     return null;
@@ -42,9 +42,9 @@ const AdminLayout = () => {
   const [showBranchMenu, setShowBranchMenu] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // ... (keep the rest the same until the branch selector)
   
-  // Navigation
+  
+  
   const navItems = [
     { name: 'Dashboard',        path: '/admin/dashboard',    icon: LayoutDashboard },
     { name: 'Miembros',         path: '/admin/members',      icon: Users },
@@ -68,7 +68,7 @@ const AdminLayout = () => {
 
   const SidebarContent = () => (
     <>
-      {/* Logo Area */}
+      {}
       <div className="h-20 flex items-center px-6 justify-between md:justify-start">
         <Link to="/admin/dashboard" className="flex items-center" onClick={() => setIsMobileMenuOpen(false)}>
           <SynxLogo className="w-28 h-auto" />
@@ -78,7 +78,7 @@ const AdminLayout = () => {
         </button>
       </div>
 
-      {/* Navigation */}
+      {}
       <nav className="flex-1 px-4 py-6 space-y-2 overflow-y-auto relative z-10">
         {navItems.map((item) => {
           const isActive = location.pathname.startsWith(item.path);
@@ -100,7 +100,7 @@ const AdminLayout = () => {
         })}
       </nav>
 
-      {/* Logout Button (Mobile Only) */}
+      {}
       <div className="p-4 md:hidden border-t border-[#1E2330]/50">
         <button 
           onClick={handleLogout}
@@ -116,12 +116,12 @@ const AdminLayout = () => {
   return (
     <div className="min-h-screen bg-[#040508] text-[#F8FAFC] flex font-sans overflow-hidden">
       
-      {/* SIDEBAR (Desktop) */}
+      {}
       <aside className="w-64 bg-[#0A0C14] flex-col hidden md:flex relative z-40 border-r border-[#1E2330]">
         <SidebarContent />
       </aside>
 
-      {/* SIDEBAR (Mobile Overlay) */}
+      {}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -140,10 +140,10 @@ const AdminLayout = () => {
         )}
       </AnimatePresence>
 
-      {/* MAIN CONTENT AREA */}
+      {}
       <main className="flex-1 flex flex-col min-w-0 bg-[#040508] relative">
         
-        {/* FONDOS ANIMADOS (GLOWING ORBS) */}
+        {}
         <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
           <motion.div 
             animate={{ 
@@ -165,11 +165,11 @@ const AdminLayout = () => {
           ></motion.div>
         </div>
 
-        {/* TOPBAR */}
+        {}
         <header className="h-20 flex items-center justify-between px-4 lg:px-10 relative z-30 bg-[#040508]/50 backdrop-blur-md border-b border-[#1E2330]/50">
           
           <div className="flex items-center gap-3">
-            {/* Hamburger Menu (Mobile) */}
+            {}
             <button 
               className="md:hidden p-2 text-[#D7DCE8]/70 hover:text-white transition-colors rounded-lg bg-[#0A0C14] border border-[#1E2330]"
               onClick={() => setIsMobileMenuOpen(true)}
@@ -177,7 +177,7 @@ const AdminLayout = () => {
               <Menu className="w-5 h-5" />
             </button>
 
-            {/* Branch Selector */}
+            {}
             <div className="relative hidden sm:block">
               <button 
                 onClick={() => isOwner && setShowBranchMenu(!showBranchMenu)}
@@ -190,7 +190,7 @@ const AdminLayout = () => {
                 <ChevronDown className="w-4 h-4 text-[#D7DCE8]/60 flex-shrink-0" />
               </button>
 
-              {/* Dropdown Menu */}
+              {}
               {showBranchMenu && (
                 <div className="absolute top-full left-0 mt-2 w-full rounded-xl border border-[#1E2330] bg-[#0A0C14] shadow-xl overflow-hidden py-2 z-50 max-h-64 overflow-y-auto custom-scrollbar">
                   <button 
@@ -216,12 +216,12 @@ const AdminLayout = () => {
             </div>
           </div>
 
-          {/* Right TopBar Area */}
+          {}
           <div className="flex items-center gap-4 md:gap-6">
             
-            {/* Header Right */}
+            {}
             <div className="flex items-center gap-3">
-              {/* User Profile Dropdown */}
+              {}
               <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#6D5DF6] to-[#3A4C8C] flex items-center justify-center text-sm font-bold shadow-[0_0_15px_rgba(109,93,246,0.2)] border border-[#6D5DF6]/50 flex-shrink-0">
                 {user?.name?.charAt(0) || 'S'}
               </div>
@@ -229,7 +229,7 @@ const AdminLayout = () => {
                 <span className="text-[13px] font-bold leading-tight">{user?.name || 'Saul Camacho'}</span>
                 <span className="text-[10px] text-[#D7DCE8]/50 uppercase tracking-widest">{user?.role || 'Owner'}</span>
               </div>
-              {/* Botón de Cerrar Sesión Desktop */}
+              {}
               <button 
                 onClick={handleLogout}
                 className="ml-2 p-2 hover:bg-[#FF4757]/10 text-[#D7DCE8]/50 hover:text-[#FF4757] rounded-xl transition-colors"
@@ -241,7 +241,7 @@ const AdminLayout = () => {
           </div>
         </header>
 
-        {/* Mobile Branch Selector */}
+        {}
         <div className="sm:hidden px-4 py-3 bg-[#0A0C14]/50 border-b border-[#1E2330]/50 flex justify-between items-center z-20 relative">
           <span className="text-[11px] text-[#D7DCE8]/60 uppercase tracking-widest font-semibold">Sucursal:</span>
           <button 
@@ -252,7 +252,7 @@ const AdminLayout = () => {
             {isOwner && <ChevronDown className="w-3 h-3 text-[#6D5DF6]" />}
           </button>
         </div>
-        {/* Dropdown Menu for Mobile */}
+        {}
         {showBranchMenu && (
           <div className="sm:hidden absolute top-[115px] left-4 right-4 rounded-xl border border-[#1E2330] bg-[#0A0C14] shadow-xl overflow-hidden py-2 z-50 max-h-60 overflow-y-auto">
             <button 
@@ -276,7 +276,7 @@ const AdminLayout = () => {
           </div>
         )}
 
-        {/* PAGE CONTENT */}
+        {}
         <div className="flex-1 p-4 md:p-6 lg:px-10 pb-10 overflow-y-auto relative z-20">
           <Outlet context={{ selectedBranch }} />
         </div>

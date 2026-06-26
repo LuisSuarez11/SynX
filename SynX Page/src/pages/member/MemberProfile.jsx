@@ -46,7 +46,7 @@ const MemberProfile = () => {
         <p className="text-[13px] text-[#D7DCE8]/50">Tus datos registrados en SynX.</p>
       </motion.div>
 
-      {/* Avatar */}
+      {}
       <motion.div variants={fadeUp} className="flex items-center gap-4">
         <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#6D5DF6] to-[#3A4C8C] flex items-center justify-center text-white text-[26px] font-black shadow-[0_0_20px_rgba(109,93,246,0.3)]">
           {user.name?.charAt(0)}
@@ -59,7 +59,7 @@ const MemberProfile = () => {
         </div>
       </motion.div>
 
-      {/* Info Card */}
+      {}
       <motion.div variants={fadeUp}
         className="bg-[#12151D]/80 backdrop-blur-2xl border border-[#1E2330] rounded-[1.5rem] overflow-hidden">
         {infoItems.map((item, i) => (
@@ -76,7 +76,7 @@ const MemberProfile = () => {
         ))}
       </motion.div>
 
-      {/* Change Password */}
+      {}
       <motion.div variants={fadeUp}
         className="bg-[#12151D]/80 backdrop-blur-2xl border border-[#1E2330] rounded-[1.5rem] overflow-hidden">
         <button onClick={() => setShowPwForm(!showPwForm)}

@@ -27,14 +27,14 @@ class AutoCheckoutAttendances extends Command
     {
         $limitTime = now()->subMinutes(120);
 
-        // Buscar asistencias sin check_out que excedan los 120 minutos
+        
         $attendances = \App\Models\Attendance::whereNull('check_out')
             ->where('check_in_time', '<=', $limitTime)
             ->get();
 
         $count = 0;
         foreach ($attendances as $attendance) {
-            // Actualizar asignando check_in_time + 120 minutos
+            
             $attendance->check_out = \Carbon\Carbon::parse($attendance->check_in_time)->addMinutes(120);
             $attendance->save();
             $count++;

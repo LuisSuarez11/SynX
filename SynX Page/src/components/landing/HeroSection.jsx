@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
-// boton q se mueve hacia donde pones el mouse
+
 function MagneticButton({ children, href, className }) {
   const buttonRef = useRef(null);
 
@@ -31,7 +31,7 @@ function MagneticButton({ children, href, className }) {
   );
 }
 
-// mockup del dashboard para mostrar en el hero
+
 function DashboardMockup() {
   return (
     <motion.div
@@ -44,7 +44,7 @@ function DashboardMockup() {
       <div className="absolute -inset-4 bg-[#6D5DF6]/15 blur-[60px] rounded-3xl pointer-events-none"></div>
 
       <div className="relative bg-[#0a0a0a] border border-[#1E2330] rounded-2xl overflow-hidden shadow-2xl shadow-purple-900/20">
-        {/* barra tipo navegador */}
+        {}
         <div className="flex items-center gap-2 px-4 py-3 border-b border-[#1E2330] bg-white/5">
           <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
@@ -56,9 +56,9 @@ function DashboardMockup() {
           </div>
         </div>
 
-        {/* contenido del dashboard */}
+        {}
         <div className="p-4 md:p-6 grid grid-cols-12 gap-3 md:gap-4 min-h-[280px] md:min-h-[340px]">
-          {/* sidebar */}
+          {}
           <div className="col-span-3 space-y-3">
             <div className="w-full h-6 bg-[#6D5DF6]/20 rounded-lg border border-[#6D5DF6]/20 flex items-center justify-center">
               <span className="text-[8px] text-[#6D5DF6] font-bold tracking-wider">SYNX</span>
@@ -73,7 +73,7 @@ function DashboardMockup() {
             </div>
           </div>
 
-          {/* parte principal */}
+          {}
           <div className="col-span-9 space-y-3 md:space-y-4">
             <div className="flex items-center justify-between">
               <div className="w-28 h-5 bg-white/10 rounded-md"></div>
@@ -83,7 +83,7 @@ function DashboardMockup() {
               </div>
             </div>
 
-            {/* tarjetas de stats */}
+            {}
             <div className="grid grid-cols-3 gap-2 md:gap-3">
               <motion.div
                 animate={{ opacity: [0.7, 1, 0.7] }}
@@ -114,7 +114,7 @@ function DashboardMockup() {
               </motion.div>
             </div>
 
-            {/* grafico de barras */}
+            {}
             <div className="bg-white/[0.03] border border-[#1E2330] rounded-xl p-3 md:p-4 flex-1">
               <div className="flex items-center justify-between mb-3">
                 <div className="w-20 h-3 bg-white/10 rounded-sm"></div>
@@ -136,7 +136,7 @@ function DashboardMockup() {
               </div>
             </div>
 
-            {/* tabla de miembros (solo desktop) */}
+            {}
             <div className="space-y-1.5 hidden md:block">
               {[...Array(3)].map((_, i) => (
                 <motion.div
@@ -174,7 +174,7 @@ export default function HeroSection() {
   return (
     <section ref={sectionRef} className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-[#040508]">
       
-      {/* fondo con parallax */}
+      {}
       <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
         <img
           src="/hero-bg.png"
@@ -192,7 +192,7 @@ export default function HeroSection() {
         className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full pt-32 pb-12"
         style={{ opacity: contentOpacity }}
       >
-        {/* texto principal */}
+        {}
         <div className="text-center max-w-4xl mx-auto mb-12 md:mb-16">
           <motion.div
             initial={{ opacity: 0, y: -10 }}
@@ -201,7 +201,7 @@ export default function HeroSection() {
             className="inline-flex items-center gap-3 mb-8 px-4 py-2 border border-[#6D5DF6]/30 bg-[#6D5DF6]/5 rounded-full backdrop-blur-sm"
           >
             <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-            <span className="font-mono-tech text-xs text-[#6D5DF6] uppercase tracking-widest">SISTEMA MULTI-TENANT // ACTIVO</span>
+            <span className="font-mono-tech text-xs text-[#6D5DF6] uppercase tracking-widest">SISTEMA MULTI-TENANT 
           </motion.div>
 
           <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black tracking-tight text-[#F8FAFC] leading-[0.92] mb-8">
@@ -256,7 +256,7 @@ export default function HeroSection() {
         <DashboardMockup />
       </motion.div>
 
-      {/* indicador de scroll */}
+      {}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

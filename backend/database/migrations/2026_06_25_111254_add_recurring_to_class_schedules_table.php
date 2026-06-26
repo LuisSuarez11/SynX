@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('class_schedules', function (Blueprint $table) {
             $table->boolean('is_recurring')->default(true)->after('instructor_id');
             $table->date('specific_date')->nullable()->after('day_of_week');
-            // Hacer day_of_week nullable porque no se usará si es clase única
+            
             $table->string('day_of_week')->nullable()->change();
         });
     }

@@ -50,7 +50,7 @@ class AttendanceController extends Controller
             'search' => 'required|string|min:2',
         ]);
 
-        // Buscar miembro por CI, QR Token o nombre
+        
         $member = User::where('tenant_id', $tenantId)
             ->where('role', 'member')
             ->where(function ($q) use ($request) {
@@ -64,12 +64,12 @@ class AttendanceController extends Controller
             return response()->json(['error' => 'Miembro no encontrado con ese CI o nombre.'], 404);
         }
 
-        // Si es manager, no debería poder registrar a alguien de otra sucursal
+        
         if ($user->role === 'manager' && $member->branch_id !== $user->branch_id) {
             return response()->json(['error' => 'Este miembro pertenece a otra sucursal.'], 403);
         }
 
-        // Verificar que tiene membresía activa
+        
         $activeSub = $member->subscriptions()
             ->with('membership')
             ->where('status', 'active')
@@ -81,12 +81,12 @@ class AttendanceController extends Controller
 
         $isCreditBased = $activeSub && $activeSub->membership && $activeSub->membership->type === 'credit_based';
 
-        // Si es por créditos, validar que tenga créditos disponibles
+        
         if ($isCreditBased && $activeSub->remaining_credits <= 0) {
             $activeSub = null;
         }
 
-        // Evitar doble escaneo accidental (cooldown de 2 minutos para todos)
+        
         $recentEntry = Attendance::where('user_id', $member->id)
             ->where('check_in_time', '>=', now()->subMinutes(2))
             ->exists();
@@ -98,7 +98,7 @@ class AttendanceController extends Controller
             ], 409);
         }
 
-        // Para planes de "Sesión Única" (créditos), limitamos a 1 entrada por día para no gastar sus créditos por accidente si salen a la tienda y vuelven.
+        
         if ($isCreditBased) {
             $alreadyInToday = Attendance::where('user_id', $member->id)
                 ->whereDate('check_in_time', today())

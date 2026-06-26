@@ -4,7 +4,7 @@ import { Mail, Lock, Eye, EyeOff, Users, Calendar, CreditCard, BarChart2, Globe,
 import { useNavigate, Link } from 'react-router-dom';
 import SynxLogo from '../components/common/SynxLogo';
 
-// Componente de Fondo Animado Futurista (Ondas Topográficas en movimiento)
+
 const AnimatedTopoBackground = () => {
   const canvasRef = useRef(null);
 
@@ -16,16 +16,16 @@ const AnimatedTopoBackground = () => {
     let time = 0;
 
     const draw = () => {
-      // Fondo oscuro
-      ctx.fillStyle = '#040508'; // Negro profundo
+      
+      ctx.fillStyle = '#040508'; 
       ctx.fillRect(0, 0, width, height);
 
-      // Dibujar lineas topográficas animadas
+      
       const lines = 45;
       for (let i = 0; i < lines; i++) {
         ctx.beginPath();
         for (let x = 0; x <= width; x += 20) {
-          // Ecuación matemática para simular topografía fluida
+          
           const y = height * 0.5 
             + Math.sin(x * 0.003 + time) * 120 
             + Math.sin(x * 0.008 - time * 0.5 + i * 0.1) * 80
@@ -36,14 +36,14 @@ const AnimatedTopoBackground = () => {
           else ctx.lineTo(x, y);
         }
 
-        // Color alternado
+        
         const isCyan = i % 3 === 0;
-        ctx.strokeStyle = isCyan ? 'rgba(58, 76, 140, 0.2)' : 'rgba(109, 93, 246, 0.15)'; // Índigo y Violeta premium
+        ctx.strokeStyle = isCyan ? 'rgba(58, 76, 140, 0.2)' : 'rgba(109, 93, 246, 0.15)'; 
         ctx.lineWidth = isCyan ? 1.5 : 1;
         ctx.stroke();
       }
 
-      time += 0.005; // Velocidad de la animación
+      time += 0.005; 
       requestAnimationFrame(draw);
     };
 
@@ -78,7 +78,7 @@ const LoginPage = () => {
   
   const [tenantName, setTenantName] = useState('');
   const [name, setName] = useState('');
-  const [email, setEmail] = useState(''); // Se usará como email o CI en login
+  const [email, setEmail] = useState(''); 
   const [password, setPassword] = useState('');
   
   const navigate = useNavigate();
@@ -110,11 +110,11 @@ const LoginPage = () => {
         throw new Error(data.message || data.errors?.[Object.keys(data.errors)[0]][0] || 'Error en la autenticación');
       }
 
-      // Guardar token y usuario
+      
       localStorage.setItem('synx_token', data.access_token);
       localStorage.setItem('synx_user', JSON.stringify(data.user));
 
-      // Redirección inteligente basada en el rol
+      
       if (data.user.role === 'owner' || data.user.role === 'manager') {
         navigate('/admin/dashboard');
       } else if (data.user.role === 'superadmin') {
@@ -142,17 +142,17 @@ const LoginPage = () => {
   return (
     <div className="min-h-screen relative flex flex-col font-sans overflow-x-hidden bg-[#040508] text-[#F8FAFC] selection:bg-[#6D5DF6]/30">
       
-      {/* Fondo Topográfico Animado Dinámico */}
+      {}
       <AnimatedTopoBackground />
 
-      {/* Header Logo Simétrico (Mismas coordenadas que LandingPage) */}
+      {}
       <div className="absolute top-0 w-full z-50 pointer-events-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 relative">
             
-            <div className="w-8 md:hidden"></div> {/* Espaciador móvil */}
+            <div className="w-8 md:hidden"></div> {}
 
-            {/* logo */}
+            {}
             <div className="pointer-events-auto absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center">
               <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
                 <SynxLogo className="w-40 md:w-48 h-auto drop-shadow-[0_0_15px_rgba(109,93,246,0.3)] hover:scale-105 transition-transform cursor-pointer" />
@@ -163,10 +163,10 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Contenedor Principal */}
+      {}
       <div className="relative z-10 w-full max-w-[1300px] mx-auto px-5 sm:px-8 lg:px-12 flex-1 flex flex-col-reverse lg:flex-row items-center justify-between py-10 lg:py-0">
         
-        {/* Lado Izquierdo: Textos y Branding */}
+        {}
         <div className="w-full lg:w-[50%] flex flex-col justify-center pr-0 lg:pr-12 mt-16 sm:mt-20 lg:mt-0 text-center lg:text-left">
           
           <motion.div
@@ -188,7 +188,7 @@ const LoginPage = () => {
               Gestiona miembros, reservas, entrenadores, pagos y más. Todo lo que tu centro deportivo necesita, en una sola plataforma.
             </p>
             
-            {/* Grid de 4 Iconos Animados */}
+            {}
             <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-8 sm:mb-12 w-full max-w-sm sm:max-w-md lg:max-w-none mx-auto lg:mx-0">
               {[
                 { icon: Users, label: 'Gestión de\nmiembros' },
@@ -211,7 +211,7 @@ const LoginPage = () => {
               ))}
             </div>
 
-            {/* Testimonial Box Animado */}
+            {}
             <motion.div 
               whileHover={{ scale: 1.02 }}
               className="flex items-center gap-4 sm:gap-6 p-4 sm:p-5 rounded-2xl border border-[#1E2330] bg-[#12151D]/50 backdrop-blur-md max-w-sm sm:max-w-lg shadow-xl hover:border-[#3A4C8C]/50 transition-all cursor-default w-full mx-auto lg:mx-0 text-left"
@@ -235,7 +235,7 @@ const LoginPage = () => {
           </motion.div>
         </div>
 
-        {/* Lado Derecho: Tarjeta de Login Glassmorphism */}
+        {}
         <div className="w-full lg:w-[45%] flex flex-col items-center justify-center lg:justify-end mt-12 lg:mt-0">
           
           <motion.div 
@@ -244,11 +244,11 @@ const LoginPage = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="w-full max-w-[440px] bg-[#12151D]/80 backdrop-blur-2xl border border-[#1E2330] rounded-[2rem] p-8 sm:p-10 shadow-[0_15px_50px_rgba(4,5,8,0.8)] relative"
           >
-            {/* Brillos dinámicos de fondo en la tarjeta */}
+            {}
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#6D5DF6]/10 rounded-full blur-[40px] pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#3A4C8C]/15 rounded-full blur-[40px] pointer-events-none" />
             
-            {/* TABS FUTURISTAS ANIMADAS */}
+            {}
             <div className="relative flex p-1 bg-[#040508]/50 rounded-2xl mb-8 border border-[#1E2330] shadow-inner">
               <button 
                 onClick={() => setIsLogin(true)}
@@ -286,7 +286,7 @@ const LoginPage = () => {
               >
                 <form className="space-y-5 relative z-10" onSubmit={handleSubmit}>
                   
-                  {/* Error Message */}
+                  {}
                   {errorMsg && (
                     <motion.div 
                       initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
@@ -296,14 +296,14 @@ const LoginPage = () => {
                     </motion.div>
                   )}
 
-                  {/* Campos de Registro */}
+                  {}
                   {!isLogin && (
                     <motion.div 
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: 'auto' }}
                       className="space-y-4"
                     >
-                      {/* Nombre del Gimnasio */}
+                      {}
                       <div className="space-y-2">
                         <label className="text-[13px] font-medium text-[#D7DCE8]">Nombre del Gimnasio</label>
                         <div className={`relative flex items-center rounded-xl border transition-all duration-300 ${focusedField === 'tenant' ? 'border-[#6D5DF6] bg-[#6D5DF6]/5 shadow-[0_0_10px_rgba(109,93,246,0.2)]' : 'border-[#1E2330] bg-[#040508]/50 hover:border-[#3A4C8C]/50'}`}>
@@ -323,7 +323,7 @@ const LoginPage = () => {
                         </div>
                       </div>
 
-                      {/* Nombre del Propietario */}
+                      {}
                       <div className="space-y-2">
                         <label className="text-[13px] font-medium text-[#D7DCE8]">Nombre del Propietario</label>
                         <div className={`relative flex items-center rounded-xl border transition-all duration-300 ${focusedField === 'name' ? 'border-[#6D5DF6] bg-[#6D5DF6]/5 shadow-[0_0_10px_rgba(109,93,246,0.2)]' : 'border-[#1E2330] bg-[#040508]/50 hover:border-[#3A4C8C]/50'}`}>
@@ -345,7 +345,7 @@ const LoginPage = () => {
                     </motion.div>
                   )}
 
-                  {/* Input Email / CI */}
+                  {}
                   <div className="space-y-2">
                     <label className="text-[13px] font-medium text-[#D7DCE8]">
                       {isLogin ? 'Email o Carnet de Identidad' : 'Correo electrónico'}
@@ -367,7 +367,7 @@ const LoginPage = () => {
                     </div>
                   </div>
 
-                  {/* Input Password */}
+                  {}
                   <div className="space-y-2">
                     <label className="text-[13px] font-medium text-[#D7DCE8]">Contraseña</label>
                     <div className={`relative flex items-center rounded-xl border transition-all duration-300 ${focusedField === 'password' ? 'border-[#6D5DF6] bg-[#6D5DF6]/5 shadow-[0_0_10px_rgba(109,93,246,0.2)]' : 'border-[#1E2330] bg-[#040508]/50 hover:border-[#3A4C8C]/50'}`}>
@@ -424,14 +424,14 @@ const LoginPage = () => {
                     </motion.button>
                   </div>
 
-                  {/* Social Login Divider */}
+                  {}
                   <div className="relative py-4 flex items-center">
                     <div className="flex-grow border-t border-[#1E2330]"></div>
                     <span className="flex-shrink-0 mx-4 text-[11px] text-[#D7DCE8]/60 uppercase tracking-widest">o continúa con</span>
                     <div className="flex-grow border-t border-[#1E2330]"></div>
                   </div>
 
-                  {/* Social Buttons */}
+                  {}
                   <div className="grid grid-cols-2 gap-4">
                     <motion.button whileHover={{ y: -2 }} type="button" className="flex items-center justify-center gap-2 py-3 rounded-xl border border-[#1E2330] bg-[#040508]/50 hover:bg-[#1E2330] transition-all shadow-md text-[13px] font-medium text-[#D7DCE8]">
                       <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -467,7 +467,7 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Footer minimalista */}
+      {}
       <div className="relative z-10 border-t border-[#1E2330] bg-[#040508]/80 backdrop-blur-md mt-auto">
         <div className="max-w-[1300px] mx-auto px-8 lg:px-12 py-5 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-4">

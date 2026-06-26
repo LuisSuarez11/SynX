@@ -22,7 +22,7 @@ const BranchesPage = () => {
       const response = await api.get('/admin/branches');
       setBranches(response.data.branches || []);
       
-      // Update local storage branches if possible
+      
       const currentUser = JSON.parse(localStorage.getItem('synx_user') || '{}');
       if (currentUser.tenant) {
         currentUser.tenant.branches = response.data.branches || [];
@@ -85,7 +85,7 @@ const BranchesPage = () => {
   return (
     <div className="max-w-[1400px] mx-auto space-y-6">
       
-      {/* Header & Actions */}
+      {}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[28px] font-bold text-[#F8FAFC] tracking-tight">Gestión de Sucursales</h1>
@@ -107,7 +107,7 @@ const BranchesPage = () => {
         </div>
       </div>
 
-      {/* Stats/Summary */}
+      {}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl p-5 flex items-center gap-4">
           <div className="w-12 h-12 rounded-xl bg-[#6D5DF6]/10 border border-[#6D5DF6]/20 flex items-center justify-center flex-shrink-0">
@@ -120,7 +120,7 @@ const BranchesPage = () => {
         </div>
       </div>
 
-      {/* Table */}
+      {}
       <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full text-left">
@@ -202,7 +202,7 @@ const BranchesPage = () => {
         </div>
       </div>
 
-      {/* Modal CRUD */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

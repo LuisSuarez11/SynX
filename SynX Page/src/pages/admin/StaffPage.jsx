@@ -7,7 +7,7 @@ const StaffPage = () => {
   const [staff, setStaff] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  // Available branches from local storage
+  
   const currentUser = JSON.parse(localStorage.getItem('synx_user') || '{}');
   const availableBranches = currentUser?.tenant?.branches || [];
 
@@ -44,7 +44,7 @@ const StaffPage = () => {
       const payload = { ...formData };
       
       if (editingStaff) {
-        if (!payload.password) delete payload.password; // Don't update password if empty
+        if (!payload.password) delete payload.password; 
         await api.put(`/admin/staff/${editingStaff.id}`, payload);
       } else {
         await api.post('/admin/staff', payload);
@@ -86,7 +86,7 @@ const StaffPage = () => {
   return (
     <div className="max-w-[1400px] mx-auto space-y-6">
       
-      {/* Header & Actions */}
+      {}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-[28px] font-bold text-[#F8FAFC] tracking-tight">Gestión de Personal</h1>
@@ -108,7 +108,7 @@ const StaffPage = () => {
         </div>
       </div>
 
-      {/* Table Container */}
+      {}
       <div className="bg-[#0A0C14] border border-[#1E2330] rounded-2xl overflow-hidden relative min-h-[400px]">
         {loading ? (
           <div className="absolute inset-0 flex items-center justify-center bg-[#0A0C14]/50 z-10 backdrop-blur-sm">
@@ -173,7 +173,7 @@ const StaffPage = () => {
         </div>
       </div>
 
-      {/* Modal Crear/Editar */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

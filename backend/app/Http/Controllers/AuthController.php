@@ -23,19 +23,19 @@ class AuthController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        // 1. Crear el Tenant (Gimnasio)
+        
         $tenant = \App\Models\Tenant::create([
             'name' => $request->tenant_name,
             'slug' => Str::slug($request->tenant_name) . '-' . Str::random(4),
-            'plan' => 'freemium' // Plan por defecto para nuevos
+            'plan' => 'freemium' 
         ]);
 
-        // 2. Crear el Dueño (Owner)
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'owner', // Solo dueños se registran por web
+            'role' => 'owner', 
             'qr_token' => Str::random(12),
             'tenant_id' => $tenant->id,
         ]);
@@ -53,11 +53,11 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'login_id' => 'required|string', // Puede ser Email o CI
+            'login_id' => 'required|string', 
             'password' => 'required|string',
         ]);
 
-        // Verificar si ingresó un Email o un CI
+        
         $fieldType = filter_var($request->login_id, FILTER_VALIDATE_EMAIL) ? 'email' : 'ci_number';
 
         $user = User::where($fieldType, $request->login_id)->first();

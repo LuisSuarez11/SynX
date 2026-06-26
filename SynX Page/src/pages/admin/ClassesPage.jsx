@@ -10,7 +10,7 @@ const ClassesPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   
-  // For manual reservation
+  
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [memberSearch, setMemberSearch] = useState('');
@@ -71,9 +71,9 @@ const ClassesPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      // Buscamos al miembro primero (En un flujo real buscaríamos por CI o email y luego mandaríamos su ID)
-      // Asumiremos que memberSearch es el ID del miembro para este demo, o buscaríamos primero.
-      // Ya que SynX tiene un endpoint, se podría buscar. Por ahora mandaremos memberSearch como user_id
+      
+      
+      
       await api.post('/admin/reservations', {
         class_schedule_id: selectedSchedule.id,
         user_id: memberSearch,
@@ -144,7 +144,7 @@ const ClassesPage = () => {
         )}
       </div>
 
-      {/* Modal Horario */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#040508]/80 backdrop-blur-sm">
@@ -212,7 +212,7 @@ const ClassesPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Modal Reserva Manual */}
+      {}
       <AnimatePresence>
         {isReserveModalOpen && selectedSchedule && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#040508]/80 backdrop-blur-sm">

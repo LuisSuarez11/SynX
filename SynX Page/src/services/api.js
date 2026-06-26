@@ -8,7 +8,7 @@ const api = axios.create({
   },
 });
 
-// Interceptor para agregar el token JWT a todas las peticiones
+
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('synx_token');
@@ -22,14 +22,14 @@ api.interceptors.request.use(
   }
 );
 
-// Interceptor para manejar tokens expirados/inválidos globales
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem('synx_token');
       localStorage.removeItem('synx_user');
-      window.location.href = '/'; // Redirige a inicio de sesión
+      window.location.href = '/'; 
     }
     return Promise.reject(error);
   }

@@ -21,12 +21,12 @@ export default function CustomCursor() {
     const onMouseLeaveInteractive = () => setIsHovering(false);
 
     const animate = () => {
-      // Smooth follow for outer ring
+      
       cursorX += (mouseX - cursorX) * 0.08;
       cursorY += (mouseY - cursorY) * 0.08;
       cursor.style.transform = `translate(${cursorX - 20}px, ${cursorY - 20}px) scale(${isHovering ? 1.8 : 1})`;
 
-      // Fast follow for inner dot
+      
       dotX += (mouseX - dotX) * 0.25;
       dotY += (mouseY - dotY) * 0.25;
       dot.style.transform = `translate(${dotX - 4}px, ${dotY - 4}px)`;
@@ -36,7 +36,7 @@ export default function CustomCursor() {
 
     window.addEventListener('mousemove', onMouseMove);
 
-    // Add hover listeners to all interactive elements
+    
     const interactives = document.querySelectorAll('a, button, input, textarea, [data-cursor-hover]');
     interactives.forEach(el => {
       el.addEventListener('mouseenter', onMouseEnterInteractive);
@@ -55,7 +55,7 @@ export default function CustomCursor() {
     };
   }, [isHovering]);
 
-  // Re-attach listeners when DOM changes
+  
   useEffect(() => {
     const observer = new MutationObserver(() => {
       const interactives = document.querySelectorAll('a, button, input, textarea, [data-cursor-hover]');
@@ -70,13 +70,13 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Outer Ring */}
+      {}
       <div
         ref={cursorRef}
         className="fixed top-0 left-0 w-10 h-10 rounded-full border-2 border-[#6D5DF6] pointer-events-none z-[9999] mix-blend-difference hidden md:block"
         style={{ transition: 'width 0.3s, height 0.3s, border-color 0.3s' }}
       />
-      {/* Inner Dot */}
+      {}
       <div
         ref={dotRef}
         className="fixed top-0 left-0 w-2 h-2 rounded-full bg-white pointer-events-none z-[9999] mix-blend-difference hidden md:block"

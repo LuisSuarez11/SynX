@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Database, Smartphone, Network } from 'lucide-react';
 
-// aca van las animaciones q se muestran en el panel derecho
+
 
 const VisualAPI = () => {
   return (
@@ -159,7 +159,7 @@ const VisualNetwork = () => {
   );
 };
 
-// datos de cada modulo core
+
 const directives = [
   {
     id: 1,
@@ -194,7 +194,7 @@ const directives = [
 export default function Features() {
   const [activeItem, setActiveItem] = useState(0);
 
-  // detectar cual feature esta centrado en pantalla al scrollear
+  
   useEffect(() => {
     const handleScroll = () => {
       const textBlocks = document.querySelectorAll('.feature-text-block');
@@ -236,10 +236,10 @@ export default function Features() {
           </h2>
         </div>
 
-        {/* layout con sticky scroll */}
+        {}
         <div className="flex flex-col lg:flex-row gap-12 relative items-start">
           
-          {/* columna izq - textos */}
+          {}
           <div className="lg:w-1/2 py-[10vh] lg:py-[30vh]">
             {directives.map((d, i) => (
               <div 
@@ -254,7 +254,7 @@ export default function Features() {
                   {d.desc}
                 </p>
 
-                {/* en mobile se muestra aca abajo */}
+                {}
                 <div className="lg:hidden mt-8 w-full h-64 rounded-2xl overflow-hidden border border-[#1E2330] shadow-[0_0_30px_rgba(109, 93, 246,0.08)]">
                   {d.ui}
                 </div>
@@ -262,7 +262,7 @@ export default function Features() {
             ))}
           </div>
 
-          {/* columna der - panel sticky (solo desktop) */}
+          {}
           <div className="hidden lg:block lg:w-1/2 sticky top-0 h-screen py-[20vh]">
             <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[#030303] border border-[#1E2330] shadow-[0_0_50px_rgba(109, 93, 246,0.1)]">
               <AnimatePresence mode="wait">

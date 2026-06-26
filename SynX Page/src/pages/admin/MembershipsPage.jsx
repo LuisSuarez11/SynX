@@ -70,7 +70,7 @@ const MembershipsPage = () => {
         </button>
       </div>
 
-      {/* Cards Grid */}
+      {}
       {loading ? (
         <div className="flex items-center justify-center h-60"><Loader2 className="w-8 h-8 text-[#6D5DF6] animate-spin" /></div>
       ) : memberships.length === 0 ? (
@@ -114,7 +114,7 @@ const MembershipsPage = () => {
         </div>
       )}
 
-      {/* Modal */}
+      {}
       <AnimatePresence>
         {isModalOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">

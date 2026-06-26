@@ -14,12 +14,12 @@ class MemberPortalController extends Controller
     {
         $user = $request->user();
 
-        // Validar que realmente sea un miembro
+        
         if ($user->role !== 'member') {
             return response()->json(['error' => 'Acceso denegado'], 403);
         }
 
-        // Cargar las relaciones necesarias
+        
         $user->load([
             'branch',
             'subscriptions' => function ($query) {
@@ -27,14 +27,14 @@ class MemberPortalController extends Controller
             }
         ]);
 
-        // Determinar el estado actual del miembro
+        
         $activeSubscription = $user->subscriptions->first(function ($sub) {
             if ($sub->status !== 'active') return false;
             if (!$sub->end_date) return true;
             return Carbon::parse($sub->end_date)->endOfDay()->isFuture();
         });
 
-        // Retornar payload estructurado para la app móvil
+        
         return response()->json([
             'user' => [
                 'name' => $user->name,
@@ -57,7 +57,7 @@ class MemberPortalController extends Controller
                 'remaining_credits' => null,
                 'days_left' => 0,
             ],
-    // En el futuro podemos mandar aquí las clases próximas
+    
             'upcoming_classes' => []
         ]);
     }

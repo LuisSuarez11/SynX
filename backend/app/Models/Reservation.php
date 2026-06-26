@@ -11,7 +11,7 @@ class Reservation extends Model
         'user_id',
         'class_schedule_id',
         'reserved_date',
-        'status',           // 'confirmed', 'cancelled', 'attended'
+        'status',           
         'credits_used',
     ];
 

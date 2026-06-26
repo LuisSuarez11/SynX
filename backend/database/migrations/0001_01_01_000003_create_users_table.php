@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             
-            $table->string('role')->default('member'); // superadmin, owner, manager, instructor, member
+            $table->string('role')->default('member'); 
             $table->string('ci_number')->nullable()->unique();
             $table->string('qr_token')->nullable()->unique();
             
