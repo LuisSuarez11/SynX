@@ -89,7 +89,8 @@ const LoginPage = () => {
     setErrorMsg('');
 
     try {
-      const endpoint = isLogin ? 'http://localhost:8000/api/login' : 'http://localhost:8000/api/register';
+      const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+      const endpoint = isLogin ? `${baseUrl}/login` : `${baseUrl}/register`;
       
       const payload = isLogin 
         ? { login_id: email, password } 
